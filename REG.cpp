@@ -61,21 +61,25 @@ void TvShows::printInfo()
     
     srand( static_cast<unsigned int>(time(NULL)));
     if (option == 1) {
+        name = "Friends";
         std::cout << "You have chosen to watch " << name << std::endl << " Please wait a moment while we generate an episode" << std::endl;
         std::cout << "........................." << std::endl;
         std::cout << getEpisodes() << std::endl;
     }
     if (option == 2) {
+        name = "The Office";
         std::cout << "You have chosen to watch "<< name << std::endl << "Please wait a moment while we generate an episode" << std::endl;
         std::cout << ".........................." << std::endl;
         std::cout << getEpisodes() << std::endl;
     }
     if (option == 3) {
+        name = "Boy Meets World";
         std::cout << "You have chosen to watch " << name << std::endl <<"Please wait a moment while we generate an episode" << std::endl;
         std::cout << "......................" << std::endl;
         std::cout << getEpisodes() << std::endl;
     }
     if (option == 4) {
+        name = "Seinfeld";
         std::cout << "You have chosen to watch " << name << std::endl <<"Please wait a moment while we generate an episode" << std::endl;
         std::cout << "......................" << std::endl;
         std::cout << getEpisodes() << std::endl;
