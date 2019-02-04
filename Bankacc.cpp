@@ -17,11 +17,16 @@ int accountBalance::todayDate() {
     struct tm* now  = localtime(&t);
     return (now -> tm_year + 1900) * 10000 + (now->tm_mon + 1) * 100 + (now->tm_mday);
 }
+int accountBalance::accountCount = 0; 
 accountBalance::accountBalance()
 {
     balance = 0.0;
     interestRate = 0.0;
     lastInterestDate = 0;
+    accountCount += 1;
+}
+accountBalance::~accountBalance() {
+    accountCount -= 1;
 }
 accountBalance::accountBalance(double amount, double interest)
 {
@@ -76,6 +81,10 @@ double accountBalance::getInterestRate()
 double accountBalance::getLastInterestDate()
 {
     return lastInterestDate;
+}
+int accountBalance::getAccountCount()
+{
+    return accountCount;
 }
 void accountBalance::info()
 {
@@ -200,6 +209,61 @@ void WalletAccount::Info()
 }
 int main()
 {
+    SavingsAccount* Savingspointer;
+    Savingspointer = nullptr;
+    WalletAccount* Walletpointer;
+    Walletpointer = nullptr;
+    cout << "Current accounts: " << accountBalance::getAccountCount();
+    cout << endl;
+    cout << "Would you like to open another account?" << endl;
+    string yes_no;
+    string yes_no2;
+    string yes_no3;
+    string balance_Q;
+    string balance_Q2;
+    cin >> yes_no;
+
+    if (yes_no == "yes" || "Yes") {
+        cout << "Would you like to open a savings account?" << endl;
+        cin >> yes_no2;
+        if (yes_no2 == "yes") {
+            cout << "What is your initial balance?" << endl;
+            cin >> balance_Q;
+            Savingspointer = new SavingsAccount;
+            cout << "Current number of accounts: " << accountBalance::getAccountCount();
+            cout << endl;
+        }
+    else
+        cout << "okay " << endl;
+        
+        while (yes_no2 == "no") {
+        cout << "Would you like to open a Wallet Account?" << endl;
+        cin >> yes_no3;
+        if (yes_no3 == "yes") {
+            cout << "What is your initial balance?" << endl;
+            cin >> balance_Q2;
+            Walletpointer = new WalletAccount;
+            cout << "Current number of accounts: " << accountBalance::getAccountCount();
+            cout << endl;
+            break;
+        }
+        };
+            while (yes_no2 == "yes") {
+                cout << "Would you like to open a Wallet Account?" << endl;
+                cin >> yes_no3;
+                if (yes_no3 == "yes") {
+                    cout << "What is your initial balance?" << endl;
+                    cin >> balance_Q2;
+                    Walletpointer = new WalletAccount;
+                    cout << "Current number of accounts: " << accountBalance::getAccountCount();
+                    cout << endl;
+                    break;
+            }
+            };
+    
+
+    }
+    
     accountBalance Account = accountBalance();
     Account.setBalance(3000);
     Account.setInterestRate(.02);
