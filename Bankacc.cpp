@@ -1,4 +1,4 @@
-//
+/
 //  main.cpp
 //  BankAccountLab
 //
@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <vector>
 using namespace std;
 
 int accountBalance::todayDate() {
@@ -17,7 +18,7 @@ int accountBalance::todayDate() {
     struct tm* now  = localtime(&t);
     return (now -> tm_year + 1900) * 10000 + (now->tm_mon + 1) * 100 + (now->tm_mday);
 }
-int accountBalance::accountCount = 0; 
+int accountBalance::accountCount = 0;    // ask about this
 accountBalance::accountBalance()
 {
     balance = 0.0;
@@ -33,6 +34,7 @@ accountBalance::accountBalance(double amount, double interest)
     balance = amount;
     interestRate = interest;
     lastInterestDate = todayDate();
+    accountCount++;
 }
 void accountBalance::setBalance(double BAL)
 {
@@ -207,63 +209,92 @@ void WalletAccount::Info()
     cout << "Last Interest Date" << getLastInterestDate() << endl;
     cout << "Max Wallet Capacity: $" <<maxWalletCapacity << endl;
 }
-int main()
-{
-    SavingsAccount* Savingspointer;
-    Savingspointer = nullptr;
-    WalletAccount* Walletpointer;
-    Walletpointer = nullptr;
-    cout << "Current accounts: " << accountBalance::getAccountCount();
-    cout << endl;
-    cout << "Would you like to open another account?" << endl;
-    string yes_no;
-    string yes_no2;
-    string yes_no3;
-    string balance_Q;
-    string balance_Q2;
-    cin >> yes_no;
 
-    if (yes_no == "yes" || "Yes") {
-        cout << "Would you like to open a savings account?" << endl;
-        cin >> yes_no2;
-        if (yes_no2 == "yes") {
+
+void week3main()
+{
+   
+    SavingsAccount* Savingspointer = nullptr;
+    WalletAccount* Walletpointer = nullptr;
+    
+    cout << "Current accounts: " << accountBalance::getAccountCount() << endl;
+    
+    string yes_no;
+    double balance_Q;
+    cout << "Would you like to open an account?" << endl;
+    cin >> yes_no;
+    if (yes_no == "yes" || yes_no == "Yes") {
+        cout << "Would you like to open a savings account?";
+        cin >> yes_no;
+        if (yes_no == "yes"|| "Yes") {
+            cout << "What is your initial balance?";
+            cin >> balance_Q;
+            Savingspointer = new SavingsAccount(balance_Q, 0.02, false);
+        }
+    
+        cout << "Would you like to open a Wallet Account?" << endl;
+        cin >> yes_no;
+        if (yes_no == "yes") {
             cout << "What is your initial balance?" << endl;
             cin >> balance_Q;
-            Savingspointer = new SavingsAccount;
-            cout << "Current number of accounts: " << accountBalance::getAccountCount();
-            cout << endl;
+            Walletpointer = new WalletAccount(balance_Q,0.02);
         }
-    else
-        cout << "okay " << endl;
         
-        while (yes_no2 == "no") {
-        cout << "Would you like to open a Wallet Account?" << endl;
-        cin >> yes_no3;
-        if (yes_no3 == "yes") {
-            cout << "What is your initial balance?" << endl;
-            cin >> balance_Q2;
-            Walletpointer = new WalletAccount;
-            cout << "Current number of accounts: " << accountBalance::getAccountCount();
-            cout << endl;
-            break;
-        }
-        };
-            while (yes_no2 == "yes") {
-                cout << "Would you like to open a Wallet Account?" << endl;
-                cin >> yes_no3;
-                if (yes_no3 == "yes") {
-                    cout << "What is your initial balance?" << endl;
-                    cin >> balance_Q2;
-                    Walletpointer = new WalletAccount;
-                    cout << "Current number of accounts: " << accountBalance::getAccountCount();
-                    cout << endl;
-                    break;
-            }
-            };
-    
-
+    }
+    else
+    {
+        cout << "Maybe other time!" << endl;
     }
     
+    cout << "Current number of accounts: " << accountBalance::getAccountCount();
+    cout << endl;
+}
+        
+        
+        
+void week4main(){
+    vector< SavingsAccount*> accounts;
+    cout << "Current number of accounts: " << accountBalance::getAccountCount();
+    cout << endl;
+    
+    string yes_no;
+    double balance_Q;
+    
+    cout << "Would you like to open a savings account?";
+    cin >> yes_no;
+    while (yes_no == "yes" || yes_no == "Yes") {
+        cout << "What is your initial balance?";
+        cin >> balance_Q;
+        SavingsAccount* Savingspointer = nullptr;
+        Savingspointer = new SavingsAccount(balance_Q, 0.02, false);
+        accounts.push_back(Savingspointer);
+        cout << "Would you like to open a savings account?";
+        cin >> yes_no;
+    }
+    cout << "Current number of accounts: " << accountBalance::getAccountCount() << endl;
+    int i;
+    for (i = 0; i < accounts.size(); i++) {
+        cout << endl << "Account number: " << i;
+        accounts.at(i) -> Info();
+    }
+    int user_index;
+    cout << endl << "Which account would you like to delete?";
+    cin >> user_index;
+    delete accounts.at(user_index);
+    accounts.erase(accounts.begin()+user_index ,accounts.begin()+user_index+1);
+    cout << endl << "Current number of accounts: " << accountBalance::getAccountCount()<< endl;
+    
+    SavingsAccount* max = accounts.at(0);
+    for (i = 0; i < accounts.size(); i++) {
+        if (max -> getBalance() < accounts.at(i) -> getBalance() ){
+            max = accounts.at(i);
+        }
+        
+    }
+    max -> Info();
+}
+    
+void week2Main(){
     accountBalance Account = accountBalance();
     Account.setBalance(3000);
     Account.setInterestRate(.02);
@@ -290,12 +321,10 @@ int main()
     wallet.deposit(50);
     wallet.Info();
     
-    
-    
-    
-    
-    
-    
-    return 0;
+    cout << accountBalance::getAccountCount();
 }
 
+int main() {
+    week4main();
+    return 0;
+}
