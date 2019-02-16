@@ -324,7 +324,78 @@ void week2Main(){
     cout << accountBalance::getAccountCount();
 }
 
+void week5main(){
+    vector< SavingsAccount*> accounts;
+    cout << accountBalance::getAccountCount() << endl;
+    cout << "Would you like to open an account? " << endl;
+    string yes_no;
+    cin >> yes_no;
+    while (yes_no == "yes" || yes_no == "Yes") {
+        cout << accountBalance::getAccountCount() << endl;
+        vector< SavingsAccount*> accounts;
+        cout << "What is your initial Savings balance?";
+        double savingsBalance;
+        cin >> savingsBalance;
+        SavingsAccount* Savingspointer = nullptr;
+        Savingspointer = new SavingsAccount(savingsBalance, 0.02, false);
+        accounts.push_back(Savingspointer);
+        cout << "What is your initial balance for your Wallet Account" << endl;
+        double walletBalance;
+        cin >> walletBalance;
+        WalletAccount* Walletpointer = nullptr;
+        Walletpointer = new WalletAccount(walletBalance,0.02);
+        cout << accountBalance::getAccountCount() << endl;
+        SavingsAccount savings(savingsBalance, 0.02, false);
+        savings.Info();
+         WalletAccount wallet(walletBalance,0.02);
+        wallet.info();
+        
+        pair<int,int> Accounts;
+        map<int, pair<int, int>> AccountNumber;
+        Accounts = make_pair(savingsBalance, walletBalance);
+        AccountNumber.emplace(1000, Accounts);
+        cout << "What is you account number?" << endl;
+        int user_index;
+        cin >> user_index;
+        if (AccountNumber.count(user_index) == 1) {
+            AccountNumber.at(user_index);
+        }
+        AccountNumber[user_index];
+        cout << "Please deposit more into chosen account" << endl;
+        cout << "Savings" << endl;
+        cout << "Wallet" << endl;
+        double user_deposit;
+        string user_choice;
+        cin >> user_choice;
+        if (user_choice == "savings" || "Savings") {
+            cout << "Enter how much you wish to deposit into savings" << endl;
+            cin >> user_deposit;
+            savings.deposit(user_deposit);
+        }
+        if (user_choice == "wallet" || "Wallet") {
+            cout << "Enter how much you wish to deposit into Wallet " << endl;
+            cin >> user_deposit;
+            wallet.deposit(user_deposit);
+        }
+        cout << "What account would you like to close?" << endl;
+        string user_account;
+        cin >> user_account;
+        if (user_account == "savings" || "Savings") {
+            delete Savingspointer;
+            cout << accountBalance::getAccountCount() << endl;
+            }
+        else if (user_account == "wallet" || "Wallet") {
+            delete Walletpointer;
+            cout << accountBalance::getAccountCount() << endl;
+        }
+        cout << accountBalance::getAccountCount() << endl;
+         savings.Info();
+         wallet.info();
+        
+    }   
+}
+
 int main() {
-    week4main();
+    week5main();
     return 0;
 }
