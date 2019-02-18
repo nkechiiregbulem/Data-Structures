@@ -372,7 +372,7 @@ void week5main(){
         if (user_choice == "savings" || "Savings") {
             cout << "Enter how much you wish to deposit into savings" << endl;
             cin >> user_deposit;
-            savings.deposit(user_deposit);
+            savingsBalance += user_deposit;
         }
         if (user_choice == "wallet" || "Wallet") {
             cout << "Enter how much you wish to deposit into Wallet " << endl;
@@ -384,16 +384,21 @@ void week5main(){
         cin >> user_account;
         if (user_account == "savings" || "Savings") {
             delete Savingspointer;
-            cout << accountBalance::getAccountCount() << endl;
+            cout << "Savings Account is now closed" << endl;
+            cout << "Number of Accounts: " <<accountBalance::getAccountCount() << endl;
             }
-        else if (user_account == "wallet" || "Wallet") {
+        if (user_account == "wallet" || "Wallet") {
             delete Walletpointer;
-            cout << accountBalance::getAccountCount() << endl;
+            cout << "Wallet Account is now closed" << endl;
+            cout <<"Number of Accounts: "<< accountBalance::getAccountCount() << endl;
         }
-        cout << accountBalance::getAccountCount() << endl;
+        cout << "***********************************" << endl;
+        cout << "Savings Account Info" << endl;
          savings.Info();
-         wallet.info();
-        
+        cout << endl << endl << endl;
+        cout << "***********************************" << endl;
+        cout << "Wallet Account Info" << endl;
+         wallet.info();  
     }   
 }
 
