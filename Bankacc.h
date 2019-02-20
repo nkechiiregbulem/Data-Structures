@@ -17,6 +17,7 @@ protected:
     double lastInterestDate;
     int todayDate();
     static int accountCount;
+    static int accountNumber;
 public:
     accountBalance();
     accountBalance(double amount, double interest);
@@ -30,6 +31,7 @@ public:
     void info ();
     ~accountBalance();
     static int getAccountCount();
+    static int getaccountNumber();
 };
 
 class SavingsAccount: public accountBalance {
