@@ -366,38 +366,40 @@ void week5main(){
         cout << "Savings Account Info" << endl;
         account.second.second->info();
     }
-    
-    cout << "Enter account number to deposit more into" << endl;
+     cout << "Enter account number to deposit more into" << endl;
     int user_accountNum;
     cin >> user_accountNum;
     cout << "Enter which account you like to change? e.g(Savings or Wallet)" << endl;
     string user_answer;
-    for (auto account:Accounts) {
+    if (Accounts.count(user_accountNum) == 1) {
         if (user_answer == "savings" || "Savings") {
             cout << "How much would you like to deposit?" << endl;
             double user_deposit;
             cin >> user_deposit;
-            account.second.second->deposit(user_deposit);
+            Accounts.at(user_accountNum).second->deposit(user_deposit);
         }
         if (user_answer == "wallet" || "Wallet") {
             cout << "How much would you like to deposit?" << endl;
             double user_deposit;
             cin >> user_deposit;
-            account.second.second->deposit(user_deposit);
+            Accounts.at(user_accountNum).first->deposit(user_deposit);
         }
     }
+
+    
     cout << "What account would you like to close?" << endl;
     int user_account;
     cin >> user_account;
-    delete Accounts.at(user_account).first;
-    delete Accounts.at(user_account).second;
-    Accounts.erase(user_account);
-    cout << "Account is now closed" << endl;
+    if (Accounts.count(user_accountNum) == 1) {
+        delete Accounts.at(user_account).first;
+        delete Accounts.at(user_account).second;
+        Accounts.erase(user_account);
+        cout << "Account is now closed" << endl;
+    }
     
     cout << "Number of Accounts: " <<accountBalance::getAccountCount() << endl;
- 
-}
 
+}   
 int main() {
     week5main();
     return 0;
