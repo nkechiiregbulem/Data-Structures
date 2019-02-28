@@ -12,7 +12,7 @@ using namespace std;
 #include <algorithm>
 #include <functional>
 
-// Binary Search Algorithm to return the  key index of an array
+// Binary Search Algorithm to return the value of key at given index of an array
 int BinarySearch( int array[], int arraySize, int key) {
     int mid_val, low_val = 0, high_val = arraySize - 1;
     
