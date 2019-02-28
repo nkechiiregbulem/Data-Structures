@@ -15,7 +15,7 @@ def binary_Search(num_list, num):
                 low_val = mid_val + 1;
   return result
   
-  print(binary_Search([1,3,5,7,9], 4))
-  print(binary_Search([2,4,6,8,10], 6))
-            
+  print(binary_Search([1,3,5,7,9], 4)) //Output = False
+  print(binary_Search([2,4,6,8,10], 6)) // Output = True
+           
   
