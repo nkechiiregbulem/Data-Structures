@@ -1,4 +1,4 @@
-// How to get random values in JSON
+// How to get random values in JSON (Example)
 
 var jsonContent= {
           "featured": [
