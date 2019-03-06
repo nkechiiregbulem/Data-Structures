@@ -32,6 +32,7 @@ public:
     ~accountBalance();
     static int getAccountCount();
     static int getaccountNumber();
+    static int AccountToDelete;
 };
 
 class SavingsAccount: public accountBalance {
