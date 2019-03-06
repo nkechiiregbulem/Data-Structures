@@ -20,7 +20,9 @@ int accountBalance::todayDate() {
     struct tm* now  = localtime(&t);
     return (now -> tm_year + 1900) * 10000 + (now->tm_mon + 1) * 100 + (now->tm_mday);
 }
-int accountBalance::accountCount = 0;    // ask about this
+int accountBalance::accountCount = 0 // ask about this
+int accountBalance::accountNumber = 999;
+int accountBalance::AccountToDelete = 0;
 accountBalance::accountBalance()
 {
     balance = 0.0;
@@ -339,16 +341,13 @@ void week5main(){
         cout << "What is your initial Savings balance?";
         double savingsBalance;
         cin >> savingsBalance;
-        SavingsAccount* Savingspointer = nullptr;
-        Savingspointer = new SavingsAccount(savingsBalance, 0.02, false);
+        SavingsAccount* Savingspointer = new SavingsAccount(savingsBalance, 0.02, false);
         cout << "What is your initial balance for your Wallet Account" << endl;
         double walletBalance;
         cin >> walletBalance;
-        WalletAccount* Walletpointer = nullptr;
-        Walletpointer = new WalletAccount(walletBalance,0.02);
+        WalletAccount* Walletpointer = new WalletAccount(walletBalance,0.02);
         
-        pair<WalletAccount*,SavingsAccount*> Account;
-        Account = make_pair(Walletpointer, Savingspointer);
+        pair<WalletAccount*,SavingsAccount*> Account = make_pair(Walletpointer, Savingspointer);
         Accounts.emplace(accountBalance::getaccountNumber(), Account);
         cout << "Would you like to open an account? " << endl;
         cin >> yes_no;
@@ -366,7 +365,8 @@ void week5main(){
         cout << "Savings Account Info" << endl;
         account.second.second->info();
     }
-     cout << "Enter account number to deposit more into" << endl;
+    
+    cout << "Enter account number to deposit more into" << endl;
     int user_accountNum;
     cin >> user_accountNum;
     cout << "Enter which account you like to change? e.g(Savings or Wallet)" << endl;
@@ -385,7 +385,7 @@ void week5main(){
             Accounts.at(user_accountNum).first->deposit(user_deposit);
         }
     }
-
+    
     
     cout << "What account would you like to close?" << endl;
     int user_account;
@@ -398,8 +398,79 @@ void week5main(){
     }
     
     cout << "Number of Accounts: " <<accountBalance::getAccountCount() << endl;
+    
+}
 
-}   
+bool sortBalance(pair<int, set<SavingsAccount*>> acc1, pair<int, set<SavingsAccount*>> acc2) {
+    double agBal1 = 0;
+    double agBal2 = 0;
+    for(auto subAccount:acc1.second){
+        agBal1 += subAccount->getBalance();
+    }
+    for(auto subAccount:acc2.second) {
+        agBal2 += subAccount->getBalance();
+    }
+    return  agBal1 > agBal2;
+
+}
+
+
+bool findHelper(pair<int, set<SavingsAccount*>> acc){
+    return acc.first == accountBalance::AccountToDelete;
+}
+
+void week6main() {
+     vector<pair<int, set<SavingsAccount*>>>Accounts;
+    cout << "Would you like to open an account?" << endl;
+    string yes_no;
+    cin >> yes_no;
+    while (yes_no == "yes" || yes_no == "Yes") {
+        cout << "Would you like to open a savings account?" << endl;
+        string yes_no2;
+        cin >> yes_no2;
+        double balance;
+        set< SavingsAccount*> subAccounts;
+        
+        while (yes_no2 == "yes" || yes_no2 == "Yes") {
+            cout << "How much would you like to deposit?" << endl;
+                cin >> balance;
+            subAccounts.insert(new SavingsAccount(balance, 0.02, false));
+            cout << "Would you like to open a savings account?" << endl;
+            cin >> yes_no2;
+        }
+        Accounts.push_back(make_pair(accountBalance::getaccountNumber(), subAccounts));
+        
+        cout << "Would you like to open an account?" << endl;
+        cin >> yes_no;
+    }
+
+    sort(Accounts.begin(), Accounts.end(),sortBalance);
+    
+    for (auto account:Accounts) {
+        set<SavingsAccount*> subAccounts = account.second;
+        cout<< "Account " << account.first << endl;
+        for (auto subAccount:subAccounts){
+            subAccount ->info();
+        }
+    }
+
+    
+    
+    cout << "Enter account number for account you wish to delete" << endl;
+    
+    cin >> accountBalance::AccountToDelete;
+    vector<pair<int, set<SavingsAccount*>>>::iterator it;
+        it = find_if(Accounts.begin(), Accounts.end(),findHelper);
+    if (it != Accounts.end()){
+            for(auto subAccount:it->second){
+                delete subAccount;
+            }
+            Accounts.erase(it);
+    }
+}
+
+
+
 int main() {
     week5main();
     return 0;
