@@ -28,3 +28,13 @@ void Merge(int numbers[], int i, int j, int k) {
     for(mergePos = 0; mergePos < mergedSize;++mergePos){
        numbers[i + mergePos] = mergedNumbers[mergePos];
 }
+
+void MergeSort (int numbers [], int i, int k) {
+     int j;
+     if (i < k) {
+          j = (i + k) / 2;
+          MergeSort(numbers, i, k);
+          MergeSort(numbers, j + 1, k);
+          Merge(numbers, i, j, k);
+     }
+}
