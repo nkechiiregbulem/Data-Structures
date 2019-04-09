@@ -157,23 +157,23 @@ void List::ListInsertionSort() {
 }
 
 int main() {
-    Node* newNode = new Node;
-    newNode->data = "Brush Teeth";
+    Node* brush = new Node;
+    brush->data = "Brush Teeth";
     Node* wash = new Node;
     wash->data = "wash face";
     Node* eat = new Node;
     eat->data = "eat breakfast";
     Node* school = new Node;
     school->data = "Go to school";
-    Node* hode = new Node;
-    hode->data = "wake up";
+    Node* wake = new Node;
+    wake->data = "wake up";
     
     List how;
-    how.ListApprend(newNode);
+    how.ListApprend(brush);
     how.ListApprend(wash);
     how.ListApprend(eat);
     how.ListApprend(school);
-    how.ListPrepend(hode);
+    how.ListPrepend(wake);
     how.ListTraverse();
     cout<<endl;
     Node* bed = new Node;
