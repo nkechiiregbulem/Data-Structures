@@ -32,11 +32,26 @@ public:
     void ListTraverse();
     void ListTraverseReverse();
     void ListInsertionSort();
+    int GetLength();
 };
 
-
+class Deque {
     
-
+private:
+    List* deque = new List();
+    
+    
+public:
+    void Pushfront(Node* x);
+    void Pushback(Node* x);
+    Node* Popfront();
+    Node* Popback();
+    Node* Peekfront();
+    Node* Peekback();
+    bool IsEmpty();
+    int GetLength();
+    
+};
 
 void List::ListApprend(Node* newNode) {
     
@@ -156,6 +171,60 @@ void List::ListInsertionSort() {
     }
 }
 
+int List::GetLength(){
+    int count=0;
+    Node* currNode;
+    currNode = Head;
+    while(currNode != nullptr) {
+        count++;
+        currNode = currNode->next;
+    }
+    return count;
+}
+
+void Deque::Pushfront( Node* x) {
+    deque->ListPrepend(x);
+}
+
+void Deque::Pushback(Node* x) {
+    deque->ListApprend(x);
+    
+}
+Node* Deque::Popfront() {
+    Node* temp = deque->Head;
+    deque->ListRemove(deque->Head);
+    return temp;
+    
+    
+}
+Node* Deque::Popback() {
+    Node* temp = deque->Tail;
+    deque->ListRemove(deque->Tail);
+    return temp;
+}
+
+
+Node* Deque::Peekfront() {
+    return deque->Head;
+}
+
+Node* Deque::Peekback() {
+    return deque->Tail;
+}
+
+bool Deque::IsEmpty() {
+    if (deque->Head == nullptr) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+int Deque::GetLength() {
+    return deque->GetLength();
+}
+
+
 int main() {
     Node* brush = new Node;
     brush->data = "Brush Teeth";
@@ -167,6 +236,18 @@ int main() {
     school->data = "Go to school";
     Node* wake = new Node;
     wake->data = "wake up";
+    
+    Deque ok;
+    ok.Pushfront(newNode);
+    ok.Pushback(wash);
+    ok.Pushback(eat);
+    ok.Pushback(school);
+    ok.Popfront();
+    ok.Popback();
+    ok.Peekfront();
+    ok.Peekback();
+    ok.IsEmpty();
+    cout <<endl;
     
     List how;
     how.ListApprend(brush);
